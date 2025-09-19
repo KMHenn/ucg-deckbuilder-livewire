@@ -15,11 +15,11 @@ class CardSearch extends Component
     public array $characterOptionsByGroup;
 
     public ?string $searchText = null;
-    public ?string $featureFilter = null;
+    public array $featureFilter = [];
     public ?string $typeFilter = null;
-    public ?string $rarityFilter = null;
+    public array $rarityFilter = [];
     public ?string $levelFilter = null;
-    public ?string $roundFilter = null;
+    public array $roundFilter = [];
     public ?string $characterFilter = null;
 
     public $cardResults;
@@ -69,12 +69,12 @@ class CardSearch extends Component
             $query->where('level', $this->levelFilter);
         }
 
-        if(!is_null($this->roundFilter)){
-            $query->where('round', $this->roundFilter);
+        if(!empty($this->roundFilter)){
+            $query->whereIn('round', implode(',', $this->roundFilter));
         }
 
-        if(!is_null($this->characterFilter)){
-            $query->where('character_name', $this->characterFilter);
+        if(!empty($this->characterFilter)){
+            $query->whereIn('character_name', implode(',', $this->characterFilter));
         }
 
         if(!is_null($this->searchText)){

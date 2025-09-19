@@ -2,57 +2,20 @@
     <div id="search-and-filter" class="grid grid-cols-3 gap-3 p-2">
         <input type="text" wire:model.blur="searchText" name="search_text" id="search_text" placeholder="Search for a card"/>
 
+        <x-inputs.multi-select label="Feature" name="feature_filter" id="feature_filter" model="featureFilter" :options="$featureOptions"/>
 
-        <select name="feature_filter" id="featureFilter" wire:model.change="featureFilter">
-            <option selected value="">-- Feature --</option>
-            @foreach($featureOptions as $feature)
-            <option value="{{ $feature }}">{{ ucfirst(str_replace('_', ' ', $feature)) }}</option>
-            @endforeach
-        </select>
+        <x-inputs.multi-select label="Rarity" name="rarity_filter" id="rarity_filter" model="rarityFilter" :options="$rarityOptions"/>        
 
-        <select name="rarity_filter" id="rarity_filter" wire:model.change="rarityFilter">
-            <option selected value="">-- Rarity --</option>
-            @foreach($rarityOptions as $rarity)
-            <option value="{{ $rarity }}">{{ ucfirst($rarity) }}</option>
-            @endforeach
-        </select>
+        <x-inputs.multi-select label="Character" name="character_filter" id="character_filter" model="characterFilter" :options="$characterOptionsByGroup" :isGrouped="true"/>
 
-        <select name="character_filter" id="character_filter" wire:model.change="characterFilter">
-            <option selected value="">-- Character --</option>
-            @foreach($characterOptionsByGroup as $group => $characterOptions)
-            <optgroup label="{{ $group }}">
-                @foreach($characterOptions as $characterOption)
-                <option value="{{ $characterOption['character_name'] }}">{{ $characterOption['character_name']}}</option>
-                @endforeach
-            </optgroup>
-            @endforeach
-        </select>
-
+        <x-inputs.multi-select label="Type" name="type_filter" id="type_filter" model="typeFilter" :options="$typeOptions"/>
         
-        <select name="type_filter" id="type_filter" wire:model.change="typeFilter">
-            <option selected value="">-- Type --</option>
-            @foreach($typeOptions as $type)
-            <option value="{{ $type }}">{{ ucfirst($type) }}</option>
-            @endforeach
-        </select>
+        <x-inputs.multi-select label="Level" name="level_filter" id="level_filter" model="levelFilter" :options="$levelOptions"/>
 
-        <select name="level_filter" id="level_filter" wire:model.change="levelFilter">
-            <option selected value="">-- Level --</option>
-            @foreach($levelOptions as $level)
-            <option value="{{ $level }}">Level {{ ucfirst($level) }}</option>
-            @endforeach
-        </select>
-
-
-        <select name="round_filter" id="round_filter" wire:model.change="roundFilter">
-            <option value="">-- Scene Round --</option>
-            @foreach($roundOptions as $round)
-            <option selected="{{ $round === $roundFilter ? 'selected' : ''}}" value="{{ $round }}">Round {{ $round }}</option>
-            @endforeach
-        </select>
+        <x-inputs.multi-select label="Scene Round" name="round_filter" id="round_filter" model="roundFilter" :options="$roundOptions"/>
     </div>
 
-    <div wire:text.live="activeFilters"></div>
+    <div wire:text.live="activeFilters">No active filters.</div>
 
     <div id="card-results">
         @if(empty($cardResults))
