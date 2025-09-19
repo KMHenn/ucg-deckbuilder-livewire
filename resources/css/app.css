@@ -9,4 +9,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@import './inputs.css';
+
+input, select{
+    @apply bg-white shadow-gray-500 rounded-sm p-2;
+}
